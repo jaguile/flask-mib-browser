@@ -8,6 +8,7 @@ async def snmpset(version, rwcommunity, agent, mib, oid, new_value):
     # tipus de la variable. Les hem de passar amb les funcions Integer i 
     # OctetString de pysnmp (per enter i string, respectivament). I si 
     # és booleà, prèviament la passem a integer. 
+    # https://stackoverflow.com/questions/59154328/pysnmp-unable-to-set-value-of-oid-str-object-has-no-attribute-gettagset
 
     if type(new_value) == bool:
         if new_value == True:
