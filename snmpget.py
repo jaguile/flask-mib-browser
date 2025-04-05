@@ -28,4 +28,8 @@ async def snmpget(version, rocommunity, agent, mib, oid):
         for varBind in varBinds:
             print(" = ".join([x.prettyPrint() for x in varBind]))
 
+        snmpEngine.close_dispatcher()
+        return varBinds
+
     snmpEngine.close_dispatcher()
+    return None

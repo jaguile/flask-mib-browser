@@ -12,5 +12,13 @@
     <p>mib ---- {{mib}}</p>
     <p>oid ---- {{oid}}</p>
     <p>query ---- {{query}}</p>
+    <p>resultat ---- {{resultat}}</p>
+
+    {% for varBind in resultat %}
+        <p>
+            oid: {{varBind["oid"]}} >>>> valor: {{varBind["value"]}}
+        </p>
+    {% endfor %}
+
 </body>
 </html>

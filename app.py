@@ -2,6 +2,7 @@ import asyncio
 from flask import Flask
 from flask import render_template, request
 from snmpget import snmpget
+from snmpset import snmpset
 
 app = Flask(__name__)
 
@@ -24,10 +25,14 @@ def snmpquery():
     valor_mib       = request.form['MIB']
     valor_oid       = request.form['OID'] + '.' + '0'
     valor_query     = request.form['query']
+    valor_set       = request.form['set']
 
-    # print (f"{valor_version}")
+    varBinds = run_query(valor_query, valor_version, valor_rocomm, valor_agent, valor_mib, valor_oid, valor_set)
 
-    run_query(valor_query, valor_version, valor_rocomm, valor_agent, valor_mib, valor_oid)
+    resultat = [
+            {"oid": str(varBind[0]), "value": varBind[1]} 
+            for varBind in varBinds
+        ]        
 
     return render_template("mib_resposta.html", 
                            version = valor_version,
@@ -35,18 +40,22 @@ def snmpquery():
                             agent = valor_agent ,
                             mib = valor_mib   ,
                             oid = valor_oid   ,
-                            query = valor_query 
+                            query = valor_query ,
+                            resultat = resultat
                            ) 
 
 
-def run_query(query, version, comm, agent, mib, oid):
+def run_query(query, version, comm, agent, mib, oid, set):
+    
     match query:
         case 'snmpget':
             print("snmpget")
-            asyncio.run(snmpget(version, comm, agent, mib, oid))
+            return asyncio.run(snmpget(version, comm, agent, mib, oid))
         case 'snmpnext':
             print("snmpnext")
-        case 'snmpget':
+        case 'snmpbulk':
             print("snmpbulk")
-        case 'snmpget':
+        case 'snmpset':
             print("snmpset")
+            return asyncio.run(snmpset(version, comm, agent, mib, oid, set))
+    return None
