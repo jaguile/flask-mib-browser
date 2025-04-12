@@ -18,7 +18,7 @@
         </div>
         
         <div>
-            <label for="rocommunity">read only/ read write Community: </label> <input type="password" name="rocommunity" id="rocommunity" value="private"/>
+            <label for="rocommunity">read only/ read write Community: </label> <input type="password" name="rocommunity" id="rocommunity" value="public"/>
         </div>
 
         <div>
@@ -39,7 +39,9 @@
                 <option value="1.3.6.1.2.1.1.3">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).system(1).sysUpTime(3)</option>
                 <option value="1.3.6.1.2.1.1.4">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).system(1).sysContact(4)</option>
                 <option value="1.3.6.1.2.1.1.5">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).system(1).sysName(5)</option>
-                <option value="1.3.6.1.2.1.2.1">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).interfaces(2).ifNumber(1)</option>
+                <option value="1.3.6.1.2.1.2">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).interfaces(2)</option>                
+                <option value="1.3.6.1.2.1.2.1">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).interfaces(2).ifNumber(1)</option>                
+                <option value="1.3.6.1.2.1.2.2">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).interfaces(2).ifTable(2)</option>
                 <option value="1.3.6.1.2.1.2.2.1.2">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).interfaces(2).ifTable(2).ifEntry(1).ifDescr(2)</option>
                 <option value="1.3.6.1.2.1.2.2.1.8">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).interfaces(2).ifTable(2).ifEntry(1).ifOperStatus(8)</option>
                 <option value="1.3.6.1.2.1.4.20.1.1">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).ip(4).ipAddrTable(20).ipAddrEntry(1).ipAdEntAddr(1)</option>
@@ -48,9 +50,8 @@
 
             </select>
         </div>
-            <label for="set">En cas de fer un snmpset, nou valor: </label> <input type="text" name="set" id="set"/>
         <div>
-
+            <label for="set">En cas de fer un snmpset, nou valor: </label> <input type="text" name="set" id="set"/>
         </div>
         <div>
             <label for="snmpget">SNMPGET: </label>
@@ -61,8 +62,8 @@
             <input type="radio" name="query" id="snmpnext" value="snmpnext" />
         </div>
         <div>
-            <label for="snmpbulk">SNMPBULK (V2C): </label>
-            <input type="radio" name="query" id="snmpbulk" value="snmpbulk" />
+            <label for="snmpbulkwalk">SNMPBULKWALK (V2C): </label>
+            <input type="radio" name="query" id="snmpbulkwalk" value="snmpbulkwalk" />
         </div>
         <div>
             <label for="snmpset">SNMPSET: </label>
