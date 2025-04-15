@@ -5,12 +5,14 @@ from snmpget import snmpget
 from snmpset import snmpset
 from snmpnext import snmpnext
 from snmpbulkwalk import snmpbulkwalk
+from mariadb import get_oid_select
 
 app = Flask(__name__)
 
 @app.route("/mib")
 def mib():
-    return render_template("mib.html")
+    oid_tuple = get_oid_select()
+    return render_template("mib.html", option_tuple = oid_tuple)
 
 # https://flask.palletsprojects.com/en/stable/quickstart/#accessing-request-data
 @app.route("/snmpquery", methods=['POST'])
