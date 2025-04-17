@@ -3,80 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mib Browser Juan Aguilera</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 </head>
-<body>
-    <p>Aquesta és la pàgina principal del projecte MIB</p>
-
-    <form action="snmpquery" method="post">
-        <div>
-            <label for="version">SNMP version: </label>
-            <select name="version" id="version">
-                <option value="1">SNMPv1</option>
-                <option value="2c">SNMPv2c</option>
-            </select>
-        </div>
+<body class="container">
+    <header>
+        <h1 class="display-4 bg-secondary-subtle border border-secondary-subtle rounded-3">MIB Browser</h1>
+    </header>
         
-        <div>
-            <label for="rocommunity">read only/ read write Community: </label> <input type="password" name="rocommunity" id="rocommunity" value="public"/>
-        </div>
+    <main class="container p-5 bg-light border border-light-subtle rounded-3">
+        <form action="snmpquery" method="post">
+            <div class="row justify-content-around">
+                <fieldset class="col col-md-5">
+                    <legend>Dades de l'agent</legend>
+                    <div>
+                        <label for="version" class="form-label" class="form-select">SNMP version: </label>
+                        <select name="version" id="version" >
+                            <option value="1">SNMPv1</option>
+                            <option value="2c" selected>SNMPv2c</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <input type="password" name="rocommunity" id="rocommunity" value="password" class="form-control" placeholder="community"/>
+                    </div>
+            
+                    <div>
+                        <input type="text" id="agent" class="form-control" placeholder="agent" name="agent" placeholder="IP o nom de domini" value="192.168.56.101"/>
+                    </div>
+                </fieldset>
+                <fieldset class="col col-md-5">
+                    <legend>Consulta</legend>
+                    <div class="form-check">
+                        <div>
+                            <input type="radio" name="query" id="snmpget" value="snmpget" checked class="form-check-input"/>
+                            <label for="snmpget" class="form-check-label">SNMPGET: </label>
+                        </div>
+                        <div>
+                            <input type="radio" name="query" id="snmpnext" value="snmpnext" class="form-check-input"/>
+                            <label for="snmpnext" class="form-check-label">SNMPNEXT: </label>
+                        </div>
+                        <div>
+                            <input type="radio" name="query" id="snmpbulkwalk" value="snmpbulkwalk" class="form-check-input"/>
+                            <label for="snmpbulkwalk" class="form-check-label">SNMPBULKWALK (V2C): </label>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <input type="radio" name="query" id="snmpset" value="snmpset" class="form-check-input"/>
+                                <label for="snmpset" class="form-check-label">SNMPSET: </label>
+                            </div>
+                            <div class="col">
+                                 <input type="text" name="set" id="set" placeholder="Nou valor" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="row justify-content-around">
+                <fieldset class="col col-md-5">
+                    <legend>OID</legend>
+                    <div>
+                        <label for="MIB" class="form-label">MIB: </label>
+                        <select name="MIB" id="MIB" class="form-select">
+                            <option value="SNMPv2-MIB">SNMPv2-MIB</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="OID" class="form-label">OID: </label>
+                        <select name="OID" id="OID" size="10" class="form-select">
+                            {% for linea in option_tuple %}
+                                <option value='{{linea["oid"]}}'>{{linea["traduccio"]}}</option>
+                            {% endfor %}
+                            <!--
+                            <option value="1.3.6.1.2.1.1.1" selected>.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).system(1).sysDescr(1)</option>
+                            <option value="1.3.6.1.2.1.1.3">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).system(1).sysUpTime(3)</option>
+                            <option value="1.3.6.1.2.1.1.4">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).system(1).sysContact(4)</option>
+                            <option value="1.3.6.1.2.1.1.5">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).system(1).sysName(5)</option>
+                            <option value="1.3.6.1.2.1.2">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).interfaces(2)</option>                
+                            <option value="1.3.6.1.2.1.2.1">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).interfaces(2).ifNumber(1)</option>                
+                            <option value="1.3.6.1.2.1.2.2">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).interfaces(2).ifTable(2)</option>
+                            <option value="1.3.6.1.2.1.2.2.1.2">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).interfaces(2).ifTable(2).ifEntry(1).ifDescr(2)</option>
+                            <option value="1.3.6.1.2.1.2.2.1.8">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).interfaces(2).ifTable(2).ifEntry(1).ifOperStatus(8)</option>
+                            <option value="1.3.6.1.2.1.4.20.1.1">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).ip(4).ipAddrTable(20).ipAddrEntry(1).ipAdEntAddr(1)</option>
+                            <option value="1.3.6.1.2.1.6.13.1.3">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).tcp(6).tcpConnTable(13).tcpConnEntry(1).tcpConnState(3)</option>
+                            <option value="1.3.6.1.2.1.7.5.1.1">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).udp(7).udpTable(5).udpEntry(1).udpLocalAddress(1)</option>
+                            -->
+                        </select>
+                    </div>
+                </fieldset>
+    
+                <fieldset class="col col-md-5 d-flex ">
+                    <div class="align-content-end">
+                        <input type="submit" value="Enviar consulta" class="btn btn-secondary"/>
+                    </div>
+                </fieldset>
+            </div>
 
-        <div>
-            <label for="agent">Agent: </label> <input type="text" id="agent" name="agent" placeholder="IP o nom de domini" value="192.168.56.101"/>
-        </div>
+        </form>
+    </main>
 
-        <div>
-            <label for="MIB">MIB: </label>
-            <select name="MIB" id="MIB">
-                <option value="SNMPv2-MIB">SNMPv2-MIB</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="OID">OID: </label>
-            <select name="OID" id="OID" size="10">
-                {% for linea in option_tuple %}
-                    <option value='{{linea["oid"]}}'>{{linea["traduccio"]}}</option>
-                {% endfor %}
-                <!--
-                <option value="1.3.6.1.2.1.1.1" selected>.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).system(1).sysDescr(1)</option>
-                <option value="1.3.6.1.2.1.1.3">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).system(1).sysUpTime(3)</option>
-                <option value="1.3.6.1.2.1.1.4">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).system(1).sysContact(4)</option>
-                <option value="1.3.6.1.2.1.1.5">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).system(1).sysName(5)</option>
-                <option value="1.3.6.1.2.1.2">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).interfaces(2)</option>                
-                <option value="1.3.6.1.2.1.2.1">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).interfaces(2).ifNumber(1)</option>                
-                <option value="1.3.6.1.2.1.2.2">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).interfaces(2).ifTable(2)</option>
-                <option value="1.3.6.1.2.1.2.2.1.2">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).interfaces(2).ifTable(2).ifEntry(1).ifDescr(2)</option>
-                <option value="1.3.6.1.2.1.2.2.1.8">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).interfaces(2).ifTable(2).ifEntry(1).ifOperStatus(8)</option>
-                <option value="1.3.6.1.2.1.4.20.1.1">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).ip(4).ipAddrTable(20).ipAddrEntry(1).ipAdEntAddr(1)</option>
-                <option value="1.3.6.1.2.1.6.13.1.3">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).tcp(6).tcpConnTable(13).tcpConnEntry(1).tcpConnState(3)</option>
-                <option value="1.3.6.1.2.1.7.5.1.1">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).udp(7).udpTable(5).udpEntry(1).udpLocalAddress(1)</option>
-                -->
-            </select>
-        </div>
-        <div>
-            <label for="set">En cas de fer un snmpset, nou valor: </label> <input type="text" name="set" id="set"/>
-        </div>
-        <div>
-            <label for="snmpget">SNMPGET: </label>
-            <input type="radio" name="query" id="snmpget" value="snmpget" checked/>
-        </div>
-        <div>
-            <label for="snmpnext">SNMPNEXT: </label>
-            <input type="radio" name="query" id="snmpnext" value="snmpnext" />
-        </div>
-        <div>
-            <label for="snmpbulkwalk">SNMPBULKWALK (V2C): </label>
-            <input type="radio" name="query" id="snmpbulkwalk" value="snmpbulkwalk" />
-        </div>
-        <div>
-            <label for="snmpset">SNMPSET: </label>
-            <input type="radio" name="query" id="snmpset" value="snmpset" />
-        </div>
-
-        <div>
-            <input type="submit" value="Enviar consulta" />
-        </div>
-    </form>
 </body>
 </html>
