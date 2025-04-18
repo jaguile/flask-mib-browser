@@ -3,13 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mib Browser Juan Aguilera</title>
+    <title>Mib Browser - Model profe</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 </head>
 <body class="container">
     <header>
         <h1 class="display-4 bg-secondary-subtle border border-secondary-subtle rounded-3">MIB Browser</h1>
     </header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" aria-disabled="true" href="#">Traps</a>
+              </li>
+            </ul>
+        </div>
+    </nav>
         
     <main class="container p-5 bg-light border border-light-subtle rounded-3">
         <form action="snmpquery" method="post">
