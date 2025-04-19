@@ -41,7 +41,7 @@
                     </div>
             
                     <div>
-                        <input type="text" id="agent" class="form-control" placeholder="agent" name="agent" placeholder="IP o nom de domini" value="192.168.56.101"/>
+                        <input type="text" id="agent" class="form-control" placeholder="agent" name="agent" value="192.168.56.101"/>
                     </div>
                 </fieldset>
                 <fieldset class="col col-md-5">
@@ -82,10 +82,15 @@
                     </div>
                     <div>
                         <label for="OID" class="form-label">OID: </label>
-                        <select name="OID" id="OID" size="10" class="form-select">
-                            {% for linea in option_tuple %}
-                                <option value='{{linea["oid"]}}'>{{linea["traduccio"]}}</option>
-                            {% endfor %}
+                            {% if (option_tuple is none) %}
+                                <input type="text" name="OID" id="OID" class="form-control" placeholder="OID" />
+                            {% else %}
+                                <select name="OID" id="OID" size="10" class="form-select">
+                                {% for linea in option_tuple %}
+                                    <option value='{{linea["oid"]}}'>{{linea["traduccio"]}}</option>
+                                {% endfor %}
+                                </select>   
+                            {%endif%}
                             <!--
                             <option value="1.3.6.1.2.1.1.1" selected>.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).system(1).sysDescr(1)</option>
                             <option value="1.3.6.1.2.1.1.3">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).system(1).sysUpTime(3)</option>
@@ -100,7 +105,6 @@
                             <option value="1.3.6.1.2.1.6.13.1.3">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).tcp(6).tcpConnTable(13).tcpConnEntry(1).tcpConnState(3)</option>
                             <option value="1.3.6.1.2.1.7.5.1.1">.iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1).udp(7).udpTable(5).udpEntry(1).udpLocalAddress(1)</option>
                             -->
-                        </select>
                     </div>
                 </fieldset>
     
