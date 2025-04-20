@@ -5,7 +5,7 @@ from snmpget import snmpget
 from snmpset import snmpset
 from snmpnext import snmpnext
 from snmpbulkwalk import snmpbulkwalk
-from mariadb import get_oid_select
+from mariadb import get_oid_select, get_oid_traduction
 
 app = Flask(__name__)
 
@@ -29,25 +29,29 @@ def snmpquery():
     valor_mib       = request.form['MIB']
     valor_query     = request.form['query']
     valor_set       = request.form['set']
+    valor_oid       = request.form['OID']
+    valor_traduct   = get_oid_traduction(valor_oid)
 
-    if valor_query == 'snmpbulkwalk':
-        valor_oid       = request.form['OID']
-    else:
+    if valor_query != 'snmpbulkwalk':
         valor_oid       = request.form['OID'] + '.' + '0'
 
     varBinds = run_query(valor_query, valor_version, valor_rocomm, valor_agent, valor_mib, valor_oid, valor_set)
 
-    resultat = [
-            {"oid": str(varBind[0]), "value": varBind[1]} 
-            for varBind in varBinds
-        ]        
-
+    if varBinds is not None:
+        resultat = [
+                {"oid": str(varBind[0]), "value": varBind[1]} 
+                for varBind in varBinds
+            ]        
+    else:
+        resultat = [{"oid": valor_oid, "value": "No trobat"}]
+        
     return render_template("mib_resposta.html", 
                             version = valor_version,
                             rocomm = valor_rocomm,
                             agent = valor_agent ,
                             mib = valor_mib   ,
                             oid = valor_oid   ,
+                            traduct = valor_traduct,
                             query = valor_query ,
                             resultat = resultat
                            ) 

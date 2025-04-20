@@ -22,7 +22,7 @@
             </ul>
         </div>
     </nav>
-    <main class="container p-5 bg-light border border-light-subtle rounded-3 font-monospace fs-6">
+    <main class="container p-5 bg-light border border-light-subtle rounded-3 font-monospace fs-6" >
         <div class="row">
             <div class="col-2 fw-bold">
                 <p>Versió SNMP</p>
@@ -30,6 +30,7 @@
                 <p>agent</p>
                 <p>mib</p>
                 <p>oid</p>
+                <p>oid - desc</p>                
                 <p>query</p>
                 <!--<p>resultat ---- {{resultat}}</p>-->
             </div>
@@ -39,6 +40,7 @@
                 <p>{{agent}}</p>
                 <p>{{mib}}</p>
                 <p>{{oid}}</p>
+                <p>{{traduct}}</p>
                 <p>{{query}}</p>
             </div>
             <div class="col bg-success-subtle border-secondary-subtle rounded-3">
@@ -46,7 +48,7 @@
                 <p>
                     <span class="fw-bold">oid</span> -  <span class="fw-light">{{varBind["oid"]}}</span>
                 </p>
-                <p>
+                <p class="bg-body-tertiary">
                     <span class="fw-bold">valor</span> - <span class="fw-light">{{varBind["value"]}}</span>
                 </p>
             {% endfor %}

@@ -29,7 +29,8 @@ async def snmpbulkwalk(version, rocommunity, agent, mib, oid):
         else:
             for varBind in varBinds:
                 print(" = ".join([x.prettyPrint() for x in varBind]))
-                varBindsArray.append(varBind)
+                # varBindsArray.append(varBind)
+                varBindsArray.append(tuple(x.prettyPrint() for x in varBind))
 
     snmpEngine.close_dispatcher()
     return varBindsArray

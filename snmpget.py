@@ -30,6 +30,7 @@ async def snmpget(version, rocommunity, agent, mib, oid):
 
         snmpEngine.close_dispatcher()
         return varBinds
+        # return tuple(tuple(x.prettyPrint() for x in varBind) for varBind in varBinds)
 
     snmpEngine.close_dispatcher()
     return None
