@@ -60,4 +60,44 @@ def get_oid_traduction(oid):
         return None
 
     
-get_oid_traduction("1.3.6.1.2.1.4.20")
+# get_oid_traduction("1.3.6.1.2.1.4.20")
+
+def get_traps(dateini='', datefi=''):
+    try:
+        mydb = mysql.connector.connect(
+            host = "192.168.56.101",
+            user = "mib",
+            password = "password",
+            database = "net_snmp"
+        )
+
+        cursorObject = mydb.cursor()
+
+        query = ("select trap_id, date_time, transport from notifications")
+
+        if dateini != '' and datefi != '':
+            query = query + (f" WHERE date_time BETWEEN '{dateini}' AND '{datefi}'")
+            print (query)
+        elif datefi != '':
+            query = query + (f" WHERE date_time <= '{datefi}'")
+            print (query)
+        elif dateini != '':
+            query = query + (f" WHERE date_time >= '{dateini}'")
+            print (query)
+
+        cursorObject.execute(query)
+
+        print(f"datefi {datefi}")
+        print(f"dateini {dateini}")
+
+        resposta_tuple = tuple(
+                {"trap_id": trap_id, "date_time": date_time, "transport": transport} for trap_id, date_time, transport in cursorObject
+            )
+
+        cursorObject.close()
+        mydb.close()
+        return resposta_tuple
+    
+    except mysql.connector.errors.DatabaseError:
+        print(f'No podem connectar a base de dades')
+        return None

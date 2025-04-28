@@ -5,7 +5,8 @@ from snmpget import snmpget
 from snmpset import snmpset
 from snmpnext import snmpnext
 from snmpbulkwalk import snmpbulkwalk
-from mariadb import get_oid_select, get_oid_traduction
+# from mariadb import get_oid_select, get_oid_traduction
+from mariadb import *
 
 app = Flask(__name__)
 
@@ -56,7 +57,6 @@ def snmpquery():
                             resultat = resultat
                            ) 
 
-
 def run_query(query, version, comm, agent, mib, oid, set=''):
     
     match query:
@@ -73,3 +73,17 @@ def run_query(query, version, comm, agent, mib, oid, set=''):
             print("snmpset")
             return asyncio.run(snmpset(version, comm, agent, mib, oid, set))
     return None
+
+# @app.route("/snmpquery", methods=['POST'])
+# @app.route("/snmptraps", methods=['GET','POST'])
+@app.route("/snmptraps")
+def snmptraps():
+
+    valor_dateini   = request.args.get('date_ini', '', type=str)
+    valor_datefi    = request.args.get('date_fi', '', type=str)
+
+    print(f"valor_datefi:   {valor_datefi}")
+
+    traps_tuple = get_traps(valor_dateini, valor_datefi)
+
+    return render_template("traps.html", traps_tuple = traps_tuple)
