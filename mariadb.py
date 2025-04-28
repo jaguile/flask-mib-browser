@@ -77,21 +77,44 @@ def get_traps(dateini='', datefi=''):
 
         if dateini != '' and datefi != '':
             query = query + (f" WHERE date_time BETWEEN '{dateini}' AND '{datefi}'")
-            print (query)
+
         elif datefi != '':
             query = query + (f" WHERE date_time <= '{datefi}'")
-            print (query)
+
         elif dateini != '':
             query = query + (f" WHERE date_time >= '{dateini}'")
-            print (query)
 
         cursorObject.execute(query)
 
-        print(f"datefi {datefi}")
-        print(f"dateini {dateini}")
-
         resposta_tuple = tuple(
                 {"trap_id": trap_id, "date_time": date_time, "transport": transport} for trap_id, date_time, transport in cursorObject
+            )
+
+        cursorObject.close()
+        mydb.close()
+        return resposta_tuple
+    
+    except mysql.connector.errors.DatabaseError:
+        print(f'No podem connectar a base de dades')
+        return None
+    
+def get_traps_detall(trap_id):
+    try:
+        mydb = mysql.connector.connect(
+            host = "192.168.56.101",
+            user = "mib",
+            password = "password",
+            database = "net_snmp"
+        )
+
+        cursorObject = mydb.cursor()
+
+        query = (f"select oid, type, value from varbinds where trap_id={trap_id}")
+
+        cursorObject.execute(query)
+
+        resposta_tuple = tuple(
+                {"oid": oid, "type": type, "value": value} for oid, type, value in cursorObject
             )
 
         cursorObject.close()

@@ -17,50 +17,28 @@
                 <a class="nav-link" href="/mib">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="#">Traps</a>
+                <a class="nav-link" href="/snmptraps">Traps</a>
               </li>
             </ul>
         </div>
     </nav>
     <main class="container p-5 bg-light border border-light-subtle rounded-3 font-monospace fs-6" >
-        <div>
-            <form action="snmptraps" method="get">
-                <div class="container justify-content-around">
-                    <fieldset class="row">
-                        <legend>Dates</legend>
-                        <div class="col-3">
-                            <label for="data_ini" class="form-label" class="form-select">Inici: </label>
-                            <input type="date" name="date_ini" id="date_ini"/>
-                        </div>
-                        <div class="col-3">
-                            <label for="data_fi" class="form-label" class="form-select">Fi: </label>
-                            <input type="date" name="date_fi" id="date_fi"/>
-                        </div>
-                        <div class="col-3 align-content-end">
-                            <input type="submit" value="Filtrar" class="btn btn-secondary"/>
-                        </div>
-                    </fieldset>
-                </div>
-            </form>
-        </div>
-    {% if (traps_tuple is none or traps_tuple|length == 0) %}
     <h1 class=" 
 	text-danger border-warning border-bottom border-top border-5 text-center">
-        NO HI HAN TRAPS ENVIATS DES DE CAP AGENT
+        DETALL DEL TRAP: {{trap_id}}
     </h1>
-    {% else %}
     <div>
         <table class="table">
             <thead>
                 <tr>
                     <th>
-                        trap_id
+                        oid
                     </th>
                     <th>
-                        Data
+                        type
                     </th>
                     <th>
-                        Connexió
+                        value
                     </th>
                 </tr>
             </thead>
@@ -68,20 +46,19 @@
                 {% for linea in traps_tuple %}
                 <tr>
                     <td>
-                        <a href='/trap_id_detall/{{linea["trap_id"]}}'>{{linea["trap_id"]}}</a>
+                        {{linea["oid"]}}
                     </td>
                     <td>
-                        {{linea["date_time"]}}
+                        {{linea["type"]}}
                     </td>
                     <td>
-                        {{linea["transport"]}}
+                        {{linea["value"]}}
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-    {%endif%}
     </main>
     
 </body>

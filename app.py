@@ -74,16 +74,22 @@ def run_query(query, version, comm, agent, mib, oid, set=''):
             return asyncio.run(snmpset(version, comm, agent, mib, oid, set))
     return None
 
-# @app.route("/snmpquery", methods=['POST'])
-# @app.route("/snmptraps", methods=['GET','POST'])
 @app.route("/snmptraps")
 def snmptraps():
 
     valor_dateini   = request.args.get('date_ini', '', type=str)
     valor_datefi    = request.args.get('date_fi', '', type=str)
 
-    print(f"valor_datefi:   {valor_datefi}")
-
     traps_tuple = get_traps(valor_dateini, valor_datefi)
 
     return render_template("traps.html", traps_tuple = traps_tuple)
+
+@app.route("/trap_id_detall/<trap_id>")
+def snmptraps_detall(trap_id):
+
+
+    traps_detall_tuple = get_traps_detall(trap_id)
+
+    print (traps_detall_tuple)
+
+    return render_template("traps_detall.html", trap_id = trap_id, traps_tuple = traps_detall_tuple)
