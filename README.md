@@ -4,6 +4,8 @@ Projecte web per crear un MIB Browser
 
 ## Com inserir l'aplicació Flask a Apache2
 
+[Article amb passos](https://toxigon.com/deploying-a-flask-application-via-the-apache-server)
+
 Passos:
 
     - Instal·lar Apache2 i el aquet libapache2-mod-wsgi-py3. Aquest últim paquet instal·larà el mòdul mod_wsgi a Apache. Aquest mòdul proveeix una interfície per poder allotjar i servir aplicacions Python dins Apache.
