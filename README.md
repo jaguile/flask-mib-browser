@@ -8,18 +8,18 @@ Projecte web de desenvolupament d'un MIB Browser
 
 Passos:
 
-- Instal·lar Apache2 i el aquet libapache2-mod-wsgi-py3. Aquest últim paquet instal·larà el mòdul mod_wsgi a Apache. Aquest mòdul proveeix una interfície per poder allotjar i servir aplicacions Python dins Apache.
-[Source: https://toxigon.com/deploying-a-flask-application-via-the-apache-server]
-- Genero carpeta o enllaç simbòlic a /var/www cap a la nostra aplicació. Sobretot, l'usuari `www-data` ha de tenir accés de lectura i execució a la carpeta o a tota la ruta a on apunta l'enllaç simbòlic.
+- Instal·lar Apache2 i el paquet libapache2-mod-wsgi-py3. Aquest últim paquet instal·larà el mòdul mod_wsgi a Apache. Aquest mòdul proveeix una interfície per poder allotjar i servir aplicacions Python dins Apache.
+[Llegir article](https://toxigon.com/deploying-a-flask-application-via-the-apache-server).
+- Genero carpeta o enllaç simbòlic a `/var/www` cap a la nostra aplicació. Sobretot, l'usuari `www-data` ha de tenir accés de lectura i execució a la carpeta o a tota la ruta cap a on apunta l'enllaç simbòlic.
 - En la carpeta genero un entorn virtual on instal·lar Flask.
-- Configuro un `VirtualHost` a `/etc/apache2/sites-avalaible/flaskApp.conf`, on `flaskApp` seria la mveva aplicació. Configura-ho primer per a poder veure simplement una `index.html` tonto per a assegurar-te que no hi han problemes de permisos i es pot veure la pàgina. Un cop ens hem assegura't, ja podem configurar el `VirtualHost` per a que *Apache2* pugui executar l'aplicació `Flask`.
+- Configuro un `VirtualHost` a `/etc/apache2/sites-avalaible/flaskApp.conf`, on `flaskApp` seria la meva aplicació. Configura-ho primer per a poder veure simplement un `index.html` tonto per a assegurar-te que no hi han problemes de permisos i es pot veure la pàgina. Un cop ens hem assegura't, ja podem configurar el `VirtualHost` per a que *Apache2* pugui executar l'aplicació `Flask`.
 - He de crear un script `Python` a la carpeta de la meva aplicació amb extensió .wsgi que serà executat per *Apache2*.
 
-Important: 
+**Important**: 
 
-    - En crear el `VirtualHost`, activem el site amb `sudo a2ensite <fitxer de configuració>`
-    - Cada vegada que toquem el fitxer de configuració del `VirtualHost` hem de fer un `sudo systemctl reload apache2`
-    - Assegurem-nos que Apache2 no llegeix l'script de caché: `touch <nom de l'script>.wsgi`
+- En crear el `VirtualHost`, activem el site amb `sudo a2ensite <fitxer de configuració>`
+- Cada vegada que toquem el fitxer de configuració del `VirtualHost` hem de fer un `sudo systemctl reload apache2`
+- Assegurem-nos que Apache2 no llegeix l'script de caché: `touch <nom de l'script>.wsgi`
 
 ### Configurar el VirtualHost
 
@@ -44,11 +44,11 @@ Important:
 </VirtualHost>
 ```
 
-    - `WSGIDaemonProcess`: La directiva `WSGIDaemonProcess` crea un procés separat (daemon) on Apache executarà la teva aplicació Python. Això separa la teva app del procés principal d'Apache. Li passes el nom que vols que tingui el procés i les rutes on ha de buscar Apache els mòduls Python.
+**Comentari a alguna arguments**: 
 
-    - `WSGIProcessGroupp`: Dius que l'aplicació anirà fins del grup de processos que especifiques amb aquesta directiva.
-
-    - `WSGIScriptAlias`: Quan algú accedeixi a `/` (l’arrel del lloc), Apache ha d'executar el fitxer .wsgi que li passes.
+- `WSGIDaemonProcess`: La directiva `WSGIDaemonProcess` crea un procés separat (daemon) on Apache executarà la teva aplicació Python. Això separa la teva app del procés principal d'Apache. Li passes el nom que vols que tingui el procés i les rutes on ha de buscar Apache els mòduls Python.
+- `WSGIProcessGroupp`: Dius que l'aplicació anirà fins del grup de processos que especifiques amb aquesta directiva.
+- `WSGIScriptAlias`: Quan algú accedeixi a `/` (l’arrel del lloc), Apache ha d'executar el fitxer .wsgi que li passes.
 
 ## Script .wsgi
 
