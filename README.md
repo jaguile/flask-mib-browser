@@ -1,6 +1,6 @@
 # flask-mib-browser
 
-Projecte web per crear un MIB Browser
+Projecte web de desenvolupament d'un MIB Browser
 
 ## Com inserir l'aplicació Flask a Apache2
 
@@ -8,12 +8,12 @@ Projecte web per crear un MIB Browser
 
 Passos:
 
-    - Instal·lar Apache2 i el aquet libapache2-mod-wsgi-py3. Aquest últim paquet instal·larà el mòdul mod_wsgi a Apache. Aquest mòdul proveeix una interfície per poder allotjar i servir aplicacions Python dins Apache.
+- Instal·lar Apache2 i el aquet libapache2-mod-wsgi-py3. Aquest últim paquet instal·larà el mòdul mod_wsgi a Apache. Aquest mòdul proveeix una interfície per poder allotjar i servir aplicacions Python dins Apache.
 [Source: https://toxigon.com/deploying-a-flask-application-via-the-apache-server]
-    - Genero carpeta o enllaç simbòlic a /var/www cap a la nostra aplicació. Sobretot, l'usuari `www-data` ha de tenir accés de lectura i execució a la carpeta o a tota la ruta a on apunta l'enllaç simbòlic.
-    - En la carpeta genero un entorn virtual on instal·lar Flask.
-    - Configuro un `VirtualHost` a `/etc/apache2/sites-avalaible/flaskApp.conf`, on `flaskApp` seria la mveva aplicació. Configura-ho primer per a poder veure simplement una `index.html` tonto per a assegurar-te que no hi han problemes de permisos i es pot veure la pàgina. Un cop ens hem assegura't, ja podem configurar el `VirtualHost` per a que *Apache2* pugui executar l'aplicació `Flask`.
-    - He de crear un script `Python` a la carpeta de la meva aplicació amb extensió .wsgi que serà executat per *Apache2*.
+- Genero carpeta o enllaç simbòlic a /var/www cap a la nostra aplicació. Sobretot, l'usuari `www-data` ha de tenir accés de lectura i execució a la carpeta o a tota la ruta a on apunta l'enllaç simbòlic.
+- En la carpeta genero un entorn virtual on instal·lar Flask.
+- Configuro un `VirtualHost` a `/etc/apache2/sites-avalaible/flaskApp.conf`, on `flaskApp` seria la mveva aplicació. Configura-ho primer per a poder veure simplement una `index.html` tonto per a assegurar-te que no hi han problemes de permisos i es pot veure la pàgina. Un cop ens hem assegura't, ja podem configurar el `VirtualHost` per a que *Apache2* pugui executar l'aplicació `Flask`.
+- He de crear un script `Python` a la carpeta de la meva aplicació amb extensió .wsgi que serà executat per *Apache2*.
 
 Important: 
 
