@@ -79,3 +79,5 @@ S'ha d'instal·lar el mòdul `proxy` i el mòdul `http_proxy`. Després, configu
         CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 ```
+
+Això no crec que s'hagi de fer així. Queda molt cutre ja que el que he fet és executar *Flask* en mode debug i redirigir Apache2 amb el seu proxy invers.
