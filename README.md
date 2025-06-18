@@ -44,7 +44,7 @@ Passos:
 </VirtualHost>
 ```
 
-**Comentari a alguna arguments**: 
+**Comentari a alguns arguments**: 
 
 - `WSGIDaemonProcess`: La directiva `WSGIDaemonProcess` crea un procés separat (daemon) on Apache executarà la teva aplicació Python. Això separa la teva app del procés principal d'Apache. Li passes el nom que vols que tingui el procés i les rutes on ha de buscar Apache els mòduls Python.
 - `WSGIProcessGroupp`: Dius que l'aplicació anirà fins del grup de processos que especifiques amb aquesta directiva.
@@ -62,4 +62,20 @@ import sys
 # Ho fa de manera temporal mentre s'executa l'aplicació i fica la ruta a l'inici del path
 sys.path.insert(0,"/home/joan/src/test_site")
 from app import app as application
+```
+
+## Com fer-ho a través d'un proxy invers a Apache
+
+S'ha d'instal·lar el mòdul `proxy` i el mòdul `http_proxy`. Després, configurem el *VirtualHost* d'una manera molt simple:
+
+```bash
+<VirtualHost *:80>
+        ServerName www.mib.com
+
+        ProxyPass / http://localhost:5000/ nocanon 
+        ProxyPassReverse / http://localhost:5000/
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
 ```
